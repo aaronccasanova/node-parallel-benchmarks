@@ -6,6 +6,8 @@ import {
   forkPath,
   workerOptions,
   chunkedFiles,
+  filesCount,
+  getElapsedTime,
 } from './config.mjs'
 
 async function run() {
@@ -58,17 +60,24 @@ async function run() {
 
 const endTimes = []
 
+console.log(
+  `Forks benchmark: Processing ${filesCount} files with ${workerPoolSize} forks\n`,
+)
+
+const benchmarkStart = process.hrtime()
+
 for (let i = 0; i < benchmarkIterations; i++) {
   const endTime = await run()
 
   endTimes.push(endTime)
 }
 
-const elapsedTimes = endTimes.map((endTime) =>
-  parseFloat((endTime[0] + endTime[1] / 1e9).toFixed(3)),
-)
+const benchMarkEnd = process.hrtime(benchmarkStart)
+const benchmarkElapsedTime = getElapsedTime(benchMarkEnd)
 
+const elapsedTimes = endTimes.map((endTime) => getElapsedTime(endTime))
 const averageElapsedTime =
   elapsedTimes.reduce((a, b) => a + b) / elapsedTimes.length
 
-console.log('Forks:   Average elapsed time:', averageElapsedTime)
+console.log(`Average time to process ${filesCount} files: `, averageElapsedTime)
+console.log('Benchmark elapsed time: ', benchmarkElapsedTime, '\n\n')

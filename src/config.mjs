@@ -34,3 +34,7 @@ function chunkFiles(files, chunkSize) {
 function getPath(path) {
   return url.fileURLToPath(new URL(path, import.meta.url))
 }
+
+export function getElapsedTime(endTime) {
+  return parseFloat((endTime[0] + endTime[1] / 1e9).toFixed(3))
+}
