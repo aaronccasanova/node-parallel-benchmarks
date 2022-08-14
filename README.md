@@ -38,6 +38,6 @@ Open the `src/config.mjs` file and update the following constants:
 | --- | --- |
 | `workerPoolSize` | The number of workers to use |
 | `benchmarkIterations` | The number of times to run the benchmark for a given Node API |
-| `processIterations` | The number of times `processor.mjs` iterates over `data.tsx`. Use this parameter to adjust how long the a single file takes to process |
+| `processIterations` | The number of times `processor.mjs` iterates over `data.tsx`. Use this parameter to adjust how long a single file takes to process |
 | `filesCount` | The number of files to process |
 | `filesChunkSize` | The number of files a `worker.mjs` instance will process at a time |
