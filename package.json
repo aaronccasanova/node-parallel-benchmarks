@@ -1,0 +1,6 @@
+{
+  "name": "node-parallel-benchmarks",
+  "scripts": {
+    "workers-vs-forks": "node src/run-workers.mjs && node src/run-forks.mjs"
+  }
+}
