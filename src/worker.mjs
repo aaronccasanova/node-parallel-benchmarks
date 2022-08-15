@@ -6,7 +6,7 @@ const processIterations = wt.workerData.processIterations
 
 const { default: processor } = await import(processorPath)
 
-getParentPort().on('message', async (message) => {
+wt.parentPort.on('message', async (message) => {
   if (message.action === 'exit') process.exit()
 
   if (!processor) throw new Error('No processor loaded')
@@ -16,8 +16,8 @@ getParentPort().on('message', async (message) => {
       const fileContent = await fs.promises.readFile(filePath, 'utf-8')
 
       const result = await processor({
-        fileContent,
         filePath,
+        fileContent,
         processIterations,
       })
 
@@ -25,12 +25,5 @@ getParentPort().on('message', async (message) => {
     }),
   )
 
-  getParentPort().postMessage({ action: 'processed', results })
+  wt.parentPort.postMessage({ action: 'processed', results })
 })
-
-function getParentPort() {
-  if (!wt.parentPort)
-    throw new Error('This script must be run in a worker thread')
-
-  return wt.parentPort
-}

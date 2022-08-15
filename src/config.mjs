@@ -1,12 +1,20 @@
 import * as url from 'node:url'
 import * as os from 'node:os'
 
+/////////////////////////////////////
+// Benchmark configuration parameters
+/////////////////////////////////////
+
 export const benchmarkIterations = 5
 export const processIterations = 10
 export const workerPoolSize = os.cpus().length - 1
 
 export const filesCount = 1000
 export const filesChunkSize = 50
+
+////////////////////////////////////
+// Benchmark constants and utilities
+////////////////////////////////////
 
 export const workerPath = getPath('./worker.mjs')
 export const forkPath = getPath('./fork.mjs')
@@ -36,4 +44,10 @@ function getPath(path) {
 
 export function getElapsedTime(endTime) {
   return parseFloat((endTime[0] + endTime[1] / 1e9).toFixed(3))
+}
+
+export function getAverageElapsedTime(endTimes) {
+  const elapsedTimes = endTimes.map((endTime) => getElapsedTime(endTime))
+
+  return elapsedTimes.reduce((a, b) => a + b, 0) / elapsedTimes.length
 }

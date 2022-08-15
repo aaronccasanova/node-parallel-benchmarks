@@ -8,13 +8,12 @@ import {
   chunkedFiles,
   filesCount,
   getElapsedTime,
+  getAverageElapsedTime,
 } from './config.mjs'
 
 async function run() {
   let chunk = 0
   const next = () => chunkedFiles[chunk++] ?? null
-
-  const startTime = process.hrtime()
 
   const workers = []
 
@@ -54,30 +53,25 @@ async function run() {
         }),
     ),
   )
-
-  return process.hrtime(startTime)
 }
-
-const endTimes = []
 
 console.log(
   `Forks benchmark: Processing ${filesCount} files with ${workerPoolSize} forks\n`,
 )
 
-const benchmarkStart = process.hrtime()
+const runEndTimes = []
+const benchmarkStartTime = process.hrtime()
 
 for (let i = 0; i < benchmarkIterations; i++) {
-  const endTime = await run()
+  const runStartTime = process.hrtime()
 
-  endTimes.push(endTime)
+  await run()
+
+  runEndTimes.push(process.hrtime(runStartTime))
 }
 
-const benchMarkEnd = process.hrtime(benchmarkStart)
-const benchmarkElapsedTime = getElapsedTime(benchMarkEnd)
-
-const elapsedTimes = endTimes.map((endTime) => getElapsedTime(endTime))
-const averageElapsedTime =
-  elapsedTimes.reduce((a, b) => a + b) / elapsedTimes.length
+const benchmarkElapsedTime = getElapsedTime(process.hrtime(benchmarkStartTime))
+const averageElapsedTime = getAverageElapsedTime(runEndTimes)
 
 console.log(`Average time to process ${filesCount} files: `, averageElapsedTime)
 console.log('Benchmark elapsed time: ', benchmarkElapsedTime, '\n\n')
