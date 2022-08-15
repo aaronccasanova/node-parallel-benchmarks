@@ -10,7 +10,8 @@ export const filesCount = 1000
 export const filesChunkSize = 50
 
 export const workerPath = getPath('./worker.mjs')
-export const forkPath = getPath('./fork.mjs')
+export const cpForkPath = getPath('./cp-fork.mjs')
+export const clusterForkPath = getPath('./cluster-fork.mjs')
 export const processorPath = getPath('./processor.mjs')
 export const dataPath = getPath('./data.txt')
 

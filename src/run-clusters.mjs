@@ -1,9 +1,9 @@
-import * as cp from 'node:child_process'
+import * as cluster from 'node:cluster'
 
 import {
   benchmarkIterations,
   workerPoolSize,
-  cpForkPath,
+  clusterForkPath,
   workerOptions,
   chunkedFiles,
   filesCount,
@@ -19,20 +19,21 @@ async function run() {
   const workers = []
 
   for (let i = 0; i < workerPoolSize; i++) {
-    workers.push(
-      cp.fork(cpForkPath, [
+    cluster.setupPrimary({
+      exec: clusterForkPath,
+      args: [
         workerOptions.workerData.processorPath,
         workerOptions.workerData.processIterations.toString(),
-      ]),
-    )
+      ],
+    })
+
+    workers.push(cluster.fork())
   }
 
   await Promise.all(
     workers.map(
       (worker) =>
         new Promise((resolve, reject) => {
-          worker.send({ action: 'process', filePaths: next() })
-
           worker.on('error', reject)
           worker.on('exit', (code) =>
             code !== 0
@@ -61,7 +62,7 @@ async function run() {
 const endTimes = []
 
 console.log(
-  `Forks benchmark: Processing ${filesCount} files with ${workerPoolSize} forks\n`,
+  `Clusters benchmark: Processing ${filesCount} files with ${workerPoolSize} forks\n`,
 )
 
 const benchmarkStart = process.hrtime()
