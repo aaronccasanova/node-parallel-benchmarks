@@ -9,8 +9,6 @@ const { default: processor } = await import(processorPath)
 wt.parentPort.on('message', async (message) => {
   if (message.action === 'exit') process.exit()
 
-  if (!processor) throw new Error('No processor loaded')
-
   const results = await Promise.all(
     message.filePaths.map(async (filePath) => {
       const fileContent = await fs.promises.readFile(filePath, 'utf-8')
