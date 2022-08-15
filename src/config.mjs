@@ -1,10 +1,9 @@
-// node benchmarks/run-workers.mjs && node benchmarks/run-forks.mjs
-
 import * as url from 'node:url'
+import * as os from 'node:os'
 
 export const benchmarkIterations = 5
 export const processIterations = 10
-export const workerPoolSize = 7
+export const workerPoolSize = os.cpus().length - 1
 
 export const filesCount = 1000
 export const filesChunkSize = 50
