@@ -34,13 +34,13 @@ async function run() {
           worker.on('error', reject)
           worker.on('exit', (code) =>
             code !== 0
-              ? reject(new Error('Failed to process file'))
-              : resolve('Processed file'),
+              ? reject(new Error('Failed to process files'))
+              : resolve('Processed files'),
           )
 
-          worker.on('message', (_message) => {
-            // _message.action | _message.results
-            // console.log('_message.results:', _message.results)
+          worker.on('message', (message) => {
+            // message.action | message.results
+            // console.log('message.results:', message.results)
             const filePaths = next()
 
             if (filePaths) {
