@@ -41,3 +41,8 @@ Open the `src/config.mjs` file and update the following constants:
 | `processIterations` | The number of times `processor.mjs` iterates over `data.tsx`. Use this parameter to adjust how long a single file takes to process |
 | `filesCount` | The number of files to process |
 | `filesChunkSize` | The number of files a `worker.mjs` instance will process at a time |
+
+## References
+
+- [Node.js `WPTRunner`](https://github.com/nodejs/node/blob/d6e626d54cda57b28e72b2c5c84a5be8aff361a2/test/common/wpt.js#L295)
+- [Facebook `jscodeshift`](https://github.com/facebook/jscodeshift/blob/8d0bf44ac29bcde9b7cbc437f7554269a6204c31/src/Runner.js#L257-L287)
