@@ -30,6 +30,8 @@ git clone https://github.com/aaronccasanova/node-parallel-benchmarks.git
 npm run workers-vs-forks
 ```
 
+<img width="486" alt="image" src="https://user-images.githubusercontent.com/32409546/184672212-39bc646b-a12c-4190-9165-05878472e24f.png">
+
 ## How to adjust the benchmark parameters?
 
 Open the `src/config.mjs` file and update the following constants:
