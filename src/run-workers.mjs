@@ -10,6 +10,9 @@ import {
   getElapsedTime,
 } from './config.mjs'
 
+// Experiment: Increase the libuv thread pool as all workers share this resource (4 by default)
+// process.env.UV_THREADPOOL_SIZE = String(workerPoolSize * 4)
+
 async function run() {
   let chunk = 0
   const next = () => chunkedFiles[chunk++] ?? null
