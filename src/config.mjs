@@ -1,16 +1,31 @@
 import * as url from 'node:url'
 import * as os from 'node:os'
+import * as util from 'node:util'
 
 /////////////////////////////////////
 // Benchmark configuration parameters
 /////////////////////////////////////
 
-export const benchmarkIterations = 5
-export const processIterations = 10
-export const workerPoolSize = os.cpus().length - 1
+const cli = util.parseArgs({
+  options: {
+    'benchmark-iterations': { short: 'b', type: 'string' },
+    'process-iterations': { short: 'p', type: 'string' },
+    'worker-pool-size': { short: 'w', type: 'string' },
+    'files-count': { short: 'f', type: 'string' },
+    'files-chunk-size': { short: 'c', type: 'string' },
+  },
+})
 
-export const filesCount = 1000
-export const filesChunkSize = 50
+export const benchmarkIterations = Number(
+  cli.values['benchmark-iterations'] ?? 5,
+)
+export const processIterations = Number(cli.values['process-iterations'] ?? 10)
+export const workerPoolSize = Number(
+  cli.values['worker-pool-size'] ?? os.cpus().length - 1,
+)
+
+export const filesCount = Number(cli.values['files-count'] ?? 1000)
+export const filesChunkSize = Number(cli.values['files-chunk-size'] ?? 50)
 
 ////////////////////////////////////
 // Benchmark constants and utilities
