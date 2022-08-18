@@ -9,7 +9,7 @@ import {
   filesCount,
   getElapsedTime,
   getAverageElapsedTime,
-} from './config.mjs'
+} from './src/config.mjs'
 
 async function run() {
   let chunk = 0

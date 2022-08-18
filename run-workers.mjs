@@ -9,7 +9,7 @@ import {
   filesCount,
   getElapsedTime,
   getAverageElapsedTime,
-} from './config.mjs'
+} from './src/config.mjs'
 
 // Experiment: Increase the libuv thread pool as all workers share this resource (4 by default)
 // process.env.UV_THREADPOOL_SIZE = String(workerPoolSize * 4)
