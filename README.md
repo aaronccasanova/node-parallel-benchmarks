@@ -18,7 +18,9 @@ npm run workers-vs-forks
 
 ## How to adjust the benchmark parameters
 
-Open the `src/config.mjs` file and update the following constants:
+Open the `config.mjs` file and update the following parameters:
+
+```js
 
 | Parameter | Description |
 | --- | --- |
@@ -31,21 +33,22 @@ Open the `src/config.mjs` file and update the following constants:
 ## How it works
 
 - Each `src/run-<script>.mjs` performs the following operations:
-  * Creates a pool of workers
-  * Passes a chunk of file paths to each worker
+  - Creates a pool of workers
+  - Passes a chunk of file paths to each worker
     - Each worker performs the following operations:
-      * Promise.all over each file path:
+      - Promise.all over each file path:
         - Reads the file content
         - Passes the file content to the `processor.mjs` script (representative of a generic function to perform any of the example applications listed above)
         - Each processor script performs the following operations:
-          * Iterates over each character in the file content
-          * Computes the frequency of each character
-          * Returns the results back to the worker
-      * Returns the results back to the main thread
-      * Receives another chunk of file paths from the main thread and repeats the above steps
-  * Terminates each worker when there are no more file paths to process
+          - Iterates over each character in the file content
+          - Computes the frequency of each character
+          - Returns the results back to the worker
+      - Returns the results back to the main thread
+      - Receives another chunk of file paths from the main thread and repeats the above steps
+  - Terminates each worker when there are no more file paths to process
 
 ## References
 
 - [Node.js `WPTRunner`](https://github.com/nodejs/node/blob/d6e626d54cda57b28e72b2c5c84a5be8aff361a2/test/common/wpt.js#L426-L474)
 - [Facebook `jscodeshift`](https://github.com/facebook/jscodeshift/blob/8d0bf44ac29bcde9b7cbc437f7554269a6204c31/src/Runner.js#L257-L287)
+```

@@ -1,6 +1,10 @@
 {
   "name": "node-parallel-benchmarks",
   "scripts": {
-    "workers-vs-forks": "node run-workers.mjs && node run-forks.mjs"
+    "all-the-things": "npm run node-workers && npm run node-forks && npm run deno-workers",
+    "workers-vs-forks": "npm run node-workers && npm run node-forks",
+    "node-workers": "node node/run-workers.mjs",
+    "node-forks": "node node/run-forks.mjs",
+    "deno-workers": "deno run --allow-read --allow-net deno/run-workers.mjs"
   }
 }

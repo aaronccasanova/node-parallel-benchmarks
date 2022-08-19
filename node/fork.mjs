@@ -1,12 +1,18 @@
 import * as fs from 'node:fs'
 
-const processorPath = process.argv[2]
-const processIterations = parseInt(process.argv[3])
-
-const { default: processor } = await import(processorPath)
+let processor
+let processIterations
 
 process.on('message', async (message) => {
-  if (message.action === 'exit') process.exit()
+  if (message.action === 'load') {
+    const mod = await import(message.processorPath)
+
+    processor = mod.default
+    processIterations = message.processIterations
+
+    process.send({ action: 'loaded' })
+    return
+  }
 
   const results = await Promise.all(
     message.filePaths.map(async (filePath) => {
