@@ -20,8 +20,6 @@ npm run workers-vs-forks
 
 Open the `config.mjs` file and update the following parameters:
 
-```js
-
 | Parameter | Description |
 | --- | --- |
 | `workerPoolSize` | The number of workers to use |
